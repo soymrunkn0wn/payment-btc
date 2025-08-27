@@ -45,9 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Store camo prices globally for access by updateCamoPrice
   window.camoPrices = {
-    "dark-matter": 89.99,
-    nebula: 94.99,
-    abyss: 84.99,
+    "dark-matter": 185.0,
+    nebula: 260.0,
+    abyss: 260.0,
+    "max-level-weapons": 148.0,
   };
 });
 
@@ -116,6 +117,12 @@ function setupCamoDropdownHandler() {
           "https://pay.zaprite.com/pl_X79LGcCv9O",
         );
         updateCamoPrice(priceEl, camoPrices["abyss"]);
+      } else if (selectedCamo === "max-level-weapons") {
+        payButton.setAttribute(
+          "data-payment-link",
+          "https://pay.zaprite.com/pl_PGiT9BhLBd",
+        );
+        updateCamoPrice(priceEl, camoPrices["max-level-weapons"]);
       } else {
         payButton.removeAttribute("data-payment-link");
         priceEl.innerHTML = `****<span class="btc-price"></span>`;
