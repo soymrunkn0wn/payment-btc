@@ -3,97 +3,222 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Bitcoin Payment Landing Page</title>
+        <title>CODAIO</title>
+        <link rel="icon" href="./images/xo logo.jpg" type="image/jpeg" />
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
         <div class="container">
-            <header>
-                <h1>XO</h1>
-                <p>call of duty services.</p>
-            </header>
+            <!-- Animated background icons -->
+            <img
+                src="./images/weapon.png"
+                alt="Weapon"
+                class="floating-icon weapon1"
+            />
+            <img
+                src="./images/weapon.png"
+                alt="Weapon"
+                class="floating-icon weapon2"
+            />
+            <img
+                src="./images/weapon.png"
+                alt="Weapon"
+                class="floating-icon weapon3"
+            />
+            <img
+                src="./images/bitcoin.png"
+                alt="Bitcoin"
+                class="floating-icon bitcoin1"
+            />
+            <img
+                src="./images/bitcoin.png"
+                alt="Bitcoin"
+                class="floating-icon bitcoin2"
+            />
+            <img
+                src="./images/bitcoin.png"
+                alt="Bitcoin"
+                class="floating-icon bitcoin3"
+            />
+            <img
+                src="./images/weapon.png"
+                alt="Weapon"
+                class="floating-icon weapon4"
+            />
+            <img
+                src="./images/bitcoin.png"
+                alt="Bitcoin"
+                class="floating-icon bitcoin4"
+            />
+            <img
+                src="./images/dollar.png"
+                alt="Dollar"
+                class="floating-icon dollar1"
+            />
+            <img
+                src="./images/dollar.png"
+                alt="Dollar"
+                class="floating-icon dollar2"
+            />
+            <img
+                src="./images/dollar.png"
+                alt="Dollar"
+                class="floating-icon dollar3"
+            />
+
+            <nav class="navbar">
+                <div class="nav-links">
+                    <a href="https://discord.gg/9czYqpDgHW" class="nav-link">
+                        <img
+                            src="./images/discord.png"
+                            alt="Discord"
+                            class="nav-icon-img"
+                        />
+                        Discord
+                    </a>
+                </div>
+            </nav>
 
             <main>
                 <div class="product-section">
-                    <div class="product-card">
-                        <h2>Sample Product</h2>
-                        <p class="description">
-                            This is a sample product to demonstrate Bitcoin and
-                            card payments using the Zaprite API.
-                        </p>
-                        <div class="price">$99.99</div>
-                        <button class="pay-button" onclick="initiatePayment()">
-                            Pay Now
-                        </button>
-                    </div>
-                </div>
+                    <div class="product-cards-container">
+                        <div class="product-card">
+                            <h2>Top 250 Ranked</h2>
+                            <p class="description">
+                                Get to top 100 in Black Ops 6 ranked play.
+                            </p>
+                            <div class="price">
+                                £149.99<span class="btc-price"></span>
+                            </div>
+                            <button
+                                class="pay-button"
+                                onclick="initiatePayment()"
+                            >
+                                Pay Now
+                            </button>
+                        </div>
+                        <div class="product-card">
+                            <h2>Weapon Camo Unlocks</h2>
+                            <p class="description">
+                                Unlock all weapon camos in Black Ops 6.
+                            </p>
 
-                <div
-                    class="config-panel"
-                    id="config-panel"
-                    style="display: none"
-                >
-                    <h3>Configuration</h3>
-                    <div class="config-form">
-                        <label for="payment-link">Zaprite Payment Link:</label>
-                        <input
-                            type="url"
-                            id="payment-link"
-                            placeholder="https://pay.zaprite.com/pl_..."
-                        />
+                            <div class="price">
+                                £79.99<span class="btc-price"></span>
+                            </div>
 
-                        <label for="product-name">Product Name:</label>
-                        <input
-                            type="text"
-                            id="product-name"
-                            placeholder="Your Product Name"
-                        />
-
-                        <label for="product-description">Description:</label>
-                        <textarea
-                            id="product-description"
-                            rows="3"
-                            placeholder="Product description..."
-                        ></textarea>
-
-                        <label for="product-price">Price:</label>
-                        <input
-                            type="number"
-                            id="product-price"
-                            step="0.01"
-                            min="0"
-                            placeholder="29.99"
-                        />
-
-                        <label for="product-currency">Currency:</label>
-                        <select id="product-currency">
-                            <option value="USD">USD</option>
-                            <option value="EUR">EUR</option>
-                            <option value="GBP">GBP</option>
-                            <option value="CAD">CAD</option>
-                        </select>
-
-                        <button onclick="saveConfig()">
-                            Save Configuration
-                        </button>
-                        <p class="config-note">
-                            Settings are saved locally in your browser.
-                        </p>
-                    </div>
-                </div>
-
-                <div
-                    class="order-status"
-                    id="order-status"
-                    style="display: none"
-                >
-                    <h3>Payment Status</h3>
-                    <div class="status-content">
-                        <div class="status-message" id="status-message"></div>
-                        <div class="order-details" id="order-details"></div>
+                            <div class="camo-selector">
+                                <select class="camo-dropdown">
+                                    <option value="">Select Camo</option>
+                                    <option value="dark-matter">
+                                        Dark Matter
+                                    </option>
+                                    <option value="nebula">Nebula</option>
+                                    <option value="abyss">Abyss</option>
+                                </select>
+                            </div>
+                            <button
+                                class="pay-button"
+                                onclick="initiatePayment()"
+                            >
+                                Pay Now
+                            </button>
+                        </div>
+                        <div class="product-card">
+                            <h2>Top 100 Ranked</h2>
+                            <p class="description">
+                                Get to top 100 in Black Ops 6 ranked play.
+                            </p>
+                            <div class="price">
+                                £149.99<span class="btc-price"></span>
+                            </div>
+                            <button
+                                class="pay-button"
+                                onclick="initiatePayment()"
+                            >
+                                Pay Now
+                            </button>
+                        </div>
+                        <div class="product-card">
+                            <h2>Prestige Master</h2>
+                            <p class="description">
+                                Reach Prestige Master level in Black Ops 6.
+                            </p>
+                            <div class="price">
+                                £199.99<span class="btc-price"></span>
+                            </div>
+                            <button
+                                class="pay-button"
+                                onclick="initiatePayment()"
+                            >
+                                Pay Now
+                            </button>
+                        </div>
                     </div>
                 </div>
             </main>
+
+            <!-- Config panel (hidden) -->
+            <div class="config-panel" id="config-panel" style="display: none">
+                <h3>Configuration</h3>
+                <div class="config-form">
+                    <label for="payment-link">Zaprite Payment Link:</label>
+                    <input
+                        type="url"
+                        id="payment-link"
+                        placeholder="https://pay.zaprite.com/pl_..."
+                    />
+
+                    <label for="product-name">Product Name:</label>
+                    <input
+                        type="text"
+                        id="product-name"
+                        placeholder="Your Product Name"
+                    />
+
+                    <label for="product-description">Description:</label>
+                    <textarea
+                        id="product-description"
+                        rows="3"
+                        placeholder="Product description..."
+                    ></textarea>
+
+                    <label for="product-price">Price:</label>
+                    <input
+                        type="number"
+                        id="product-price"
+                        step="0.01"
+                        min="0"
+                        placeholder="99.99"
+                    />
+
+                    <label for="product-currency">Currency:</label>
+                    <select id="product-currency">
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="CAD">CAD</option>
+                    </select>
+
+                    <button onclick="saveConfig()">Save Configuration</button>
+                    <p class="config-note">
+                        Settings are saved locally in your browser.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Order status (hidden) -->
+            <div class="order-status" id="order-status" style="display: none">
+                <h3>Payment Status</h3>
+                <div class="status-content">
+                    <div class="status-message" id="status-message"></div>
+                    <div class="order-details" id="order-details"></div>
+                </div>
+            </div>
+
+            <footer>
+                <p>&copy; 2025 CODAIO</p>
+            </footer>
         </div>
 
         <!-- Loading spinner -->

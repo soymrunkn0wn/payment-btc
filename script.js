@@ -36,34 +36,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Fetch Bitcoin price
   fetchBitcoinPrice();
+
+  // Add click handlers to background icons
+  setupBackgroundIconClickHandlers();
 });
 
 // Update product display in UI
 function updateProductDisplay() {
-  const productCard = document.querySelector(".product-card");
-  if (productCard) {
-    const nameEl = productCard.querySelector("h2");
-    const descEl = productCard.querySelector(".description");
-    const priceEl = productCard.querySelector(".price");
+  const productCards = document.querySelectorAll(".product-card");
+  const prices = [99.99, 149.99, 79.99, 199.99]; // Prices for each product card
 
-    if (nameEl) nameEl.textContent = PRODUCT.name;
-    if (descEl) descEl.textContent = PRODUCT.description;
-    if (priceEl) {
-      const btcEquivalent =
-        BITCOIN_PRICE_GBP > 0
-          ? (() => {
-              const sats = Math.round(
-                (PRODUCT.price / BITCOIN_PRICE_GBP) * 100000000,
-              );
-              const formattedSats = sats
-                .toLocaleString("en-US")
-                .replace(/,/g, " ");
-              return ` (₿${formattedSats})`;
-            })()
-          : "";
-      priceEl.innerHTML = `£${PRODUCT.price}<span class="btc-price">${btcEquivalent}</span>`;
+  productCards.forEach((productCard, index) => {
+    const priceEl = productCard.querySelector(".price");
+    if (priceEl && BITCOIN_PRICE_GBP > 0) {
+      const price = prices[index];
+      const btcEquivalent = (() => {
+        const sats = Math.round((price / BITCOIN_PRICE_GBP) * 100000000);
+        const formattedSats = sats.toLocaleString("en-US").replace(/,/g, " ");
+        return ` <img src="./images/bitcoin-new.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
+      })();
+      priceEl.innerHTML = `£${price}<span class="btc-price">${btcEquivalent}</span>`;
     }
-  }
+  });
 }
 
 // Toggle payment info visibility
@@ -505,3 +499,31 @@ async function fetchBitcoinPrice() {
 
 // Refresh Bitcoin price every 5 minutes
 setInterval(fetchBitcoinPrice, 5 * 60 * 1000);
+
+// Setup click handlers for background icons
+function setupBackgroundIconClickHandlers() {
+  // Bitcoin icons
+  const bitcoinIcons = document.querySelectorAll(
+    ".bitcoin1, .bitcoin2, .bitcoin3, .bitcoin4",
+  );
+  bitcoinIcons.forEach((icon) => {
+    icon.style.cursor = "pointer";
+    icon.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.open("https://bitcoin.org/en/", "_blank");
+    });
+  });
+
+  // Dollar icons
+  const dollarIcons = document.querySelectorAll(".dollar1, .dollar2, .dollar3");
+  dollarIcons.forEach((icon) => {
+    icon.style.cursor = "pointer";
+    icon.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.open(
+        "https://x.com/OppCostApp/status/1952831340597948565/video/1",
+        "_blank",
+      );
+    });
+  });
+}

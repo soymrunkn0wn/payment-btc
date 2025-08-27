@@ -200,7 +200,7 @@ zapriteDebug.getOrderStatus('order_id')
    ```bash
    # Using Python 3
    python -m http.server 8000
-   
+
    # Using Node.js (if you have http-server installed)
    npx http-server
    ```
