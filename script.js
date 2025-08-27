@@ -79,7 +79,7 @@ function updateProductDisplay() {
         btcEquivalent = (() => {
           const sats = Math.round((price / BITCOIN_PRICE_GBP) * 100000000);
           const formattedSats = sats.toLocaleString("en-US").replace(/,/g, " ");
-          return ` <img src="./images/bitcoin-logo.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
+          return ` <img src="./images/bitcoin.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
         })();
         priceEl.innerHTML = `£${price}<span class="btc-price">${btcEquivalent}</span>`;
       } else {
@@ -136,7 +136,7 @@ function updateCamoPrice(priceEl, price) {
     const btcEquivalent = (() => {
       const sats = Math.round((price / BITCOIN_PRICE_GBP) * 100000000);
       const formattedSats = sats.toLocaleString("en-US").replace(/,/g, " ");
-      return ` <img src="./images/bitcoin-logo.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
+      return ` <img src="./images/bitcoin.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
     })();
     priceEl.innerHTML = `£${price}<span class="btc-price">${btcEquivalent}</span>`;
   } else {
