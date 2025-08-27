@@ -43,12 +43,26 @@ document.addEventListener("DOMContentLoaded", function () {
   // Setup camo dropdown handler
   setupCamoDropdownHandler();
 
+  // Setup rank dropdown handler
+  setupRankDropdownHandler();
+
   // Store camo prices globally for access by updateCamoPrice
   window.camoPrices = {
     "dark-matter": 185.0,
     nebula: 260.0,
     abyss: 260.0,
     "max-level-weapons": 148.0,
+  };
+
+  // Store rank prices globally for access by updateRankPrice
+  window.rankPrices = {
+    "bronze-diamond": 50.0,
+    "bronze-crimson": 150.0,
+    "bronze-iridescent": 250.0,
+    "bronze-top250": 750.0,
+    "diamond-crimson": 75.0,
+    "diamond-iridescent": 200.0,
+    "crimson-iridescent": 100.0,
   };
 });
 
@@ -60,16 +74,35 @@ function updateProductDisplay() {
     "dark-matter": 89.99,
     nebula: 94.99,
     abyss: 84.99,
+    "max-level-weapons": 148.0,
+  };
+
+  const rankPrices = window.rankPrices || {
+    "bronze-diamond": 50.0,
+    "bronze-crimson": 150.0,
+    "bronze-iridescent": 250.0,
+    "bronze-top250": 750.0,
+    "diamond-crimson": 75.0,
+    "diamond-iridescent": 200.0,
+    "crimson-iridescent": 100.0,
   };
 
   productCards.forEach((productCard, index) => {
     const priceEl = productCard.querySelector(".price");
     const camoDropdown = productCard.querySelector(".camo-dropdown");
 
+    const rankDropdown = productCard.querySelector(".rank-dropdown");
+
+    // For rank product card (index 0), only update if no rank is selected
+    if (index === 0 && rankDropdown) {
+      if (!rankDropdown.value) {
+        priceEl.innerHTML = `choose below<span class="btc-price"></span>`;
+      }
+    }
     // For camo product card (index 1), only update if no camo is selected
-    if (index === 1 && camoDropdown) {
+    else if (index === 1 && camoDropdown) {
       if (!camoDropdown.value) {
-        priceEl.innerHTML = `****<span class="btc-price"></span>`;
+        priceEl.innerHTML = `choose below<span class="btc-price"></span>`;
       }
     } else if (priceEl && BITCOIN_PRICE_GBP > 0) {
       let price = prices[index];
@@ -125,7 +158,7 @@ function setupCamoDropdownHandler() {
         updateCamoPrice(priceEl, camoPrices["max-level-weapons"]);
       } else {
         payButton.removeAttribute("data-payment-link");
-        priceEl.innerHTML = `****<span class="btc-price"></span>`;
+        priceEl.innerHTML = `choose below<span class="btc-price"></span>`;
       }
     });
   }
@@ -145,6 +178,46 @@ function updateCamoPrice(priceEl, price) {
 
   // Store the current price in a data attribute to prevent reset
   priceEl.setAttribute("data-camo-price", price);
+}
+
+// Setup rank dropdown handler
+function setupRankDropdownHandler() {
+  const rankDropdown = document.querySelector(".rank-dropdown");
+  if (rankDropdown) {
+    rankDropdown.addEventListener("change", function () {
+      const selectedRank = this.value;
+      const productCard = this.closest(".product-card");
+      const payButton = productCard.querySelector(".pay-button");
+      const priceEl = productCard.querySelector(".price");
+
+      if (selectedRank && rankPrices[selectedRank]) {
+        payButton.setAttribute(
+          "data-payment-link",
+          "https://pay.zaprite.com/pl_QLrOjMIZks",
+        );
+        updateRankPrice(priceEl, rankPrices[selectedRank]);
+      } else {
+        payButton.removeAttribute("data-payment-link");
+        priceEl.innerHTML = `choose below<span class="btc-price"></span>`;
+      }
+    });
+  }
+}
+
+function updateRankPrice(priceEl, price) {
+  if (BITCOIN_PRICE_GBP > 0) {
+    const btcEquivalent = (() => {
+      const sats = Math.round((price / BITCOIN_PRICE_GBP) * 100000000);
+      const formattedSats = sats.toLocaleString("en-US").replace(/,/g, " ");
+      return ` <img src="./images/bitcoin.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
+    })();
+    priceEl.innerHTML = `£${price}<span class="btc-price">${btcEquivalent}</span>`;
+  } else {
+    priceEl.innerHTML = `£${price}<span class="btc-price"></span>`;
+  }
+
+  // Store the current price in a data attribute to prevent reset
+  priceEl.setAttribute("data-rank-price", price);
 }
 
 // Toggle payment info visibility
