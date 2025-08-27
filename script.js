@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Update product display in UI
 function updateProductDisplay() {
   const productCards = document.querySelectorAll(".product-card");
-  const prices = [99.99, 79.99, 149.99, 199.99]; // Prices for each product card
+  const prices = [149.99, 79.99]; // Prices for each product card
   const camoPrices = window.camoPrices || {
     "dark-matter": 89.99,
     nebula: 94.99,
