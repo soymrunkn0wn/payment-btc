@@ -39,25 +39,105 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Add click handlers to background icons
   setupBackgroundIconClickHandlers();
+
+  // Setup camo dropdown handler
+  setupCamoDropdownHandler();
+
+  // Store camo prices globally for access by updateCamoPrice
+  window.camoPrices = {
+    "dark-matter": 89.99,
+    nebula: 94.99,
+    abyss: 84.99,
+  };
 });
 
 // Update product display in UI
 function updateProductDisplay() {
   const productCards = document.querySelectorAll(".product-card");
-  const prices = [99.99, 149.99, 79.99, 199.99]; // Prices for each product card
+  const prices = [99.99, 79.99, 149.99, 199.99]; // Prices for each product card
+  const camoPrices = window.camoPrices || {
+    "dark-matter": 89.99,
+    nebula: 94.99,
+    abyss: 84.99,
+  };
 
   productCards.forEach((productCard, index) => {
     const priceEl = productCard.querySelector(".price");
-    if (priceEl && BITCOIN_PRICE_GBP > 0) {
-      const price = prices[index];
-      const btcEquivalent = (() => {
-        const sats = Math.round((price / BITCOIN_PRICE_GBP) * 100000000);
-        const formattedSats = sats.toLocaleString("en-US").replace(/,/g, " ");
-        return ` <img src="./images/bitcoin-new.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
-      })();
-      priceEl.innerHTML = `£${price}<span class="btc-price">${btcEquivalent}</span>`;
+    const camoDropdown = productCard.querySelector(".camo-dropdown");
+
+    // For camo product card (index 1), only update if no camo is selected
+    if (index === 1 && camoDropdown) {
+      if (!camoDropdown.value) {
+        priceEl.innerHTML = `****<span class="btc-price"></span>`;
+      }
+    } else if (priceEl && BITCOIN_PRICE_GBP > 0) {
+      let price = prices[index];
+      let btcEquivalent = "";
+
+      if (BITCOIN_PRICE_GBP > 0) {
+        btcEquivalent = (() => {
+          const sats = Math.round((price / BITCOIN_PRICE_GBP) * 100000000);
+          const formattedSats = sats.toLocaleString("en-US").replace(/,/g, " ");
+          return ` <img src="./images/bitcoin-logo.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
+        })();
+        priceEl.innerHTML = `£${price}<span class="btc-price">${btcEquivalent}</span>`;
+      } else {
+        priceEl.innerHTML = `£${price}<span class="btc-price"></span>`;
+      }
     }
   });
+}
+
+// Setup camo dropdown handler
+function setupCamoDropdownHandler() {
+  const camoDropdown = document.querySelector(".camo-dropdown");
+  if (camoDropdown) {
+    camoDropdown.addEventListener("change", function () {
+      const selectedCamo = this.value;
+      const productCard = this.closest(".product-card");
+      const payButton = productCard.querySelector(".pay-button");
+      const priceEl = productCard.querySelector(".price");
+
+      if (selectedCamo === "dark-matter") {
+        payButton.setAttribute(
+          "data-payment-link",
+          "https://pay.zaprite.com/pl_v8M4fFP4DH",
+        );
+        updateCamoPrice(priceEl, camoPrices["dark-matter"]);
+      } else if (selectedCamo === "nebula") {
+        payButton.setAttribute(
+          "data-payment-link",
+          "https://pay.zaprite.com/pl_fq3xcoQDAx",
+        );
+        updateCamoPrice(priceEl, camoPrices["nebula"]);
+      } else if (selectedCamo === "abyss") {
+        payButton.setAttribute(
+          "data-payment-link",
+          "https://pay.zaprite.com/pl_X79LGcCv9O",
+        );
+        updateCamoPrice(priceEl, camoPrices["abyss"]);
+      } else {
+        payButton.removeAttribute("data-payment-link");
+        priceEl.innerHTML = `****<span class="btc-price"></span>`;
+      }
+    });
+  }
+}
+
+function updateCamoPrice(priceEl, price) {
+  if (BITCOIN_PRICE_GBP > 0) {
+    const btcEquivalent = (() => {
+      const sats = Math.round((price / BITCOIN_PRICE_GBP) * 100000000);
+      const formattedSats = sats.toLocaleString("en-US").replace(/,/g, " ");
+      return ` <img src="./images/bitcoin-logo.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
+    })();
+    priceEl.innerHTML = `£${price}<span class="btc-price">${btcEquivalent}</span>`;
+  } else {
+    priceEl.innerHTML = `£${price}<span class="btc-price"></span>`;
+  }
+
+  // Store the current price in a data attribute to prevent reset
+  priceEl.setAttribute("data-camo-price", price);
 }
 
 // Toggle payment info visibility
@@ -359,24 +439,31 @@ function openPaymentWindow(url) {
 }
 
 // Main payment initiation function
-async function initiatePayment() {
+async function initiatePayment(event) {
   showLoading();
 
   try {
-    // Use existing payment link
-    const order = await createOrderFromPaymentLink();
+    // Check if this is the camo product with a specific payment link
+    const payButton = event.target;
+    const specificPaymentLink = payButton.getAttribute("data-payment-link");
 
-    if (order && order.checkout_url) {
+    let checkoutUrl;
+    if (specificPaymentLink) {
+      checkoutUrl = specificPaymentLink;
+    } else {
+      // Use existing payment link for other products
+      const order = await createOrderFromPaymentLink();
+      checkoutUrl = order.checkout_url;
+    }
+
+    if (checkoutUrl) {
       hideLoading();
-
-      // Try to open payment window immediately (user-initiated action)
-      openPaymentWindow(order.checkout_url);
+      openPaymentWindow(checkoutUrl);
     } else {
       throw new Error("No checkout URL available");
     }
   } catch (error) {
     hideLoading();
-
     console.error("Payment initiation error:", error);
     showStatus("error", `❌ Payment initiation failed: ${error.message}`);
   }
