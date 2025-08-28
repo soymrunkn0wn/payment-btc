@@ -365,6 +365,7 @@ main {
 
 .product-card {
     background: rgba(25, 25, 25, 0.9);
+    backdrop-filter: blur(2px);
     border: 3px solid white;
     text-align: center;
     width: 100%;
@@ -426,7 +427,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     animation: priceFlicker 2s infinite;
     width: 100%;
@@ -514,6 +515,7 @@ main {
     background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
     color: white;
     border: 3px solid white;
+    margin-top: 8px;
     padding: 15px 30px;
     font-size: 1.1rem;
     font-weight: 900;

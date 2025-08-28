@@ -527,6 +527,19 @@ async function initiatePayment(event) {
     const payButton = event.target;
     const specificPaymentLink = payButton.getAttribute("data-payment-link");
 
+    // Check if no dropdown option is selected
+    const productCard = payButton.closest(".product-card");
+    const rankDropdown = productCard.querySelector(".rank-dropdown");
+    const camoDropdown = productCard.querySelector(".camo-dropdown");
+
+    if (
+      (rankDropdown && !rankDropdown.value) ||
+      (camoDropdown && !camoDropdown.value)
+    ) {
+      hideLoading();
+      return;
+    }
+
     let checkoutUrl;
     if (specificPaymentLink) {
       checkoutUrl = specificPaymentLink;
