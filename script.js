@@ -110,7 +110,9 @@ function updateProductDisplay() {
 
       if (BITCOIN_PRICE_GBP > 0) {
         btcEquivalent = (() => {
-          const sats = Math.round((price / BITCOIN_PRICE_GBP) * 100000000);
+          const sats = Math.round(
+            ((price * 0.8) / BITCOIN_PRICE_GBP) * 100000000,
+          );
           const formattedSats = sats.toLocaleString("en-US").replace(/,/g, " ");
           return ` <img src="./images/bitcoin.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
         })();
@@ -167,7 +169,7 @@ function setupCamoDropdownHandler() {
 function updateCamoPrice(priceEl, price) {
   if (BITCOIN_PRICE_GBP > 0) {
     const btcEquivalent = (() => {
-      const sats = Math.round((price / BITCOIN_PRICE_GBP) * 100000000);
+      const sats = Math.round(((price * 0.8) / BITCOIN_PRICE_GBP) * 100000000);
       const formattedSats = sats.toLocaleString("en-US").replace(/,/g, " ");
       return ` <img src="./images/bitcoin.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
     })();
@@ -219,7 +221,7 @@ function setupRankDropdownHandler() {
 function updateRankPrice(priceEl, price) {
   if (BITCOIN_PRICE_GBP > 0) {
     const btcEquivalent = (() => {
-      const sats = Math.round((price / BITCOIN_PRICE_GBP) * 100000000);
+      const sats = Math.round(((price * 0.8) / BITCOIN_PRICE_GBP) * 100000000);
       const formattedSats = sats.toLocaleString("en-US").replace(/,/g, " ");
       return ` <img src="./images/bitcoin.png" alt="Bitcoin" class="bitcoin-icon">${formattedSats} <span class="discount-text">(20% off)</span>`;
     })();
