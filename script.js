@@ -208,6 +208,11 @@ function setupRankDropdownHandler() {
             "data-payment-link",
             "https://pay.zaprite.com/pl_8eTfoCrZi5",
           );
+        } else if (selectedRank === "bronze-top250") {
+          payButton.setAttribute(
+            "data-payment-link",
+            "https://pay.zaprite.com/pl_9kmQeo1lPb",
+          );
         } else {
           payButton.setAttribute(
             "data-payment-link",
