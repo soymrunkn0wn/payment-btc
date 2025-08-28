@@ -191,10 +191,22 @@ function setupRankDropdownHandler() {
       const priceEl = productCard.querySelector(".price");
 
       if (selectedRank && rankPrices[selectedRank]) {
-        payButton.setAttribute(
-          "data-payment-link",
-          "https://pay.zaprite.com/pl_QLrOjMIZks",
-        );
+        if (selectedRank === "bronze-diamond") {
+          payButton.setAttribute(
+            "data-payment-link",
+            "https://pay.zaprite.com/pl_MEgc8zJwU4",
+          );
+        } else if (selectedRank === "bronze-crimson") {
+          payButton.setAttribute(
+            "data-payment-link",
+            "https://pay.zaprite.com/pl_OOenTvjBsK",
+          );
+        } else {
+          payButton.setAttribute(
+            "data-payment-link",
+            "https://pay.zaprite.com/pl_QLrOjMIZks",
+          );
+        }
         updateRankPrice(priceEl, rankPrices[selectedRank]);
       } else {
         payButton.removeAttribute("data-payment-link");
