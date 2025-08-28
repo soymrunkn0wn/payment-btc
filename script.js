@@ -203,6 +203,11 @@ function setupRankDropdownHandler() {
             "data-payment-link",
             "https://pay.zaprite.com/pl_OOenTvjBsK",
           );
+        } else if (selectedRank === "bronze-iridescent") {
+          payButton.setAttribute(
+            "data-payment-link",
+            "https://pay.zaprite.com/pl_8eTfoCrZi5",
+          );
         } else {
           payButton.setAttribute(
             "data-payment-link",
